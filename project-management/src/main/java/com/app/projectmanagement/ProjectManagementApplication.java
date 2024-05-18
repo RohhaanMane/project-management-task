@@ -14,7 +14,7 @@ public class ProjectManagementApplication {
 		SpringApplication.run(ProjectManagementApplication.class, args);
 	}
 
-	@Bean 
+	@Bean
 	public ModelMapper modelMapper() {
 		System.out.println("in model mapper bean creation");
 		ModelMapper modelMapper = new ModelMapper();
