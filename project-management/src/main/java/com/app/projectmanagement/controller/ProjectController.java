@@ -5,9 +5,11 @@ import com.app.projectmanagement.dto.ProjectRequestDto;
 import com.app.projectmanagement.dto.ProjectResponseDto;
 import com.app.projectmanagement.model.Project;
 import com.app.projectmanagement.service.ProjectService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public class ProjectController {
     private ProjectService projectService;
     // Add new Project
     @PostMapping
-    public ResponseEntity<ProjectResponseDto> addProject(@RequestBody ProjectRequestDto projectDTO){
+    public ResponseEntity<ProjectResponseDto> addProject(@RequestBody @Valid ProjectRequestDto projectDTO){
         ProjectResponseDto savedProject = projectService.addProject(projectDTO);
         return ResponseEntity.ok(savedProject);
     }
