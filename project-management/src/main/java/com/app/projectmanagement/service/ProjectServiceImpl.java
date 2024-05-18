@@ -1,4 +1,5 @@
 package com.app.projectmanagement.service;
+
 import com.app.projectmanagement.custom_exceptions.ResourseNotFoundException;
 import com.app.projectmanagement.dto.ProjectRequestDto;
 import com.app.projectmanagement.dto.ProjectResponseDto;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class ProjectServiceImpl implements ProjectService{
+public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
@@ -38,8 +39,8 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public ProjectResponseDto getProjectById(Long id) {
-       Project project = projectRepository.findById(id).orElseThrow(() -> new ResourseNotFoundException("Invalid Project Id!!!"));
-       return modelMapper.map(project, ProjectResponseDto.class);
+        Project project = projectRepository.findById(id).get();
+        return modelMapper.map(project, ProjectResponseDto.class);
 
 //        Optional<Project> project = projectRepository.findById(id);
 //        if(project.isPresent()){
@@ -51,7 +52,7 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public ProjectResponseDto updateProject(Long id, ProjectRequestDto projectRequestDto) {
         Optional<Project> projectData = projectRepository.findById(id);
-        if(projectData.isPresent()){
+        if (projectData.isPresent()) {
             Project updatedProject = projectData.get();
             updatedProject.setName(projectRequestDto.getName());
             updatedProject.setDescription(projectRequestDto.getDescription());
@@ -60,15 +61,14 @@ public class ProjectServiceImpl implements ProjectService{
 
             ProjectResponseDto projRespObj = modelMapper.map(projectRepository.save(updatedProject), ProjectResponseDto.class);
             return projRespObj;
-        }
-        else{
+        } else {
             throw new ResourseNotFoundException("Project Id is Invalid");
         }
     }
 
     @Override
     public String deleteProject(Long id) {
-        Project project = projectRepository.findById(id).orElseThrow(() -> new ResourseNotFoundException("Invalid Project Id!!!"));
+        Project project = projectRepository.findById(id).get();
         projectRepository.deleteById(id);
         return "Project with Id" + id + " deleted Successfully";
     }

@@ -20,52 +20,36 @@ public class ProjectController {
 
     @Autowired
     private ProjectService projectService;
+
     // Add new Project
     @PostMapping
-    public ResponseEntity<ProjectResponseDto> addProject(@RequestBody @Valid ProjectRequestDto projectDTO){
+    public ResponseEntity<ProjectResponseDto> addProject(@RequestBody @Valid ProjectRequestDto projectDTO) {
         ProjectResponseDto savedProject = projectService.addProject(projectDTO);
         return ResponseEntity.ok(savedProject);
     }
+
     // Retrive All projects
     @GetMapping
-    public ResponseEntity<List<ProjectResponseDto>> getAllProjects(){
-        try {
-
-            return new ResponseEntity<>(projectService.getAllProjects(), HttpStatus.OK);
-        }catch (Exception ex){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<List<ProjectResponseDto>> getAllProjects() {
+        return new ResponseEntity<>(projectService.getAllProjects(), HttpStatus.OK);
     }
 
     // Retrive project by Id
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProjectById(@PathVariable Long id){
-        try{
-            return new ResponseEntity<>(projectService.getProjectById(id), HttpStatus.OK);
-        }catch (Exception ex){
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<?> getProjectById(@PathVariable Long id) {
+        return new ResponseEntity<>(projectService.getProjectById(id), HttpStatus.OK);
     }
 
     // Update Existing Project by id
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProject(@PathVariable Long id, @RequestBody ProjectRequestDto projectRequestDto){
-        try{
-            return new ResponseEntity<>(projectService.updateProject(id, projectRequestDto), HttpStatus.OK);
-        }catch(Exception ex){
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<?> updateProject(@PathVariable Long id, @RequestBody ProjectRequestDto projectRequestDto) {
+        return new ResponseEntity<>(projectService.updateProject(id, projectRequestDto), HttpStatus.OK);
     }
 
     // Delete Project by Id
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProject(@PathVariable Long id){
-        try{
-
-            return new ResponseEntity<>(projectService.deleteProject(id), HttpStatus.OK);
-        }catch(Exception ex){
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<?> deleteProject(@PathVariable Long id) {
+        return new ResponseEntity<>(projectService.deleteProject(id), HttpStatus.OK);
     }
 }
 

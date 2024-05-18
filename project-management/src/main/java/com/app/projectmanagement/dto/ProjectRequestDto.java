@@ -20,7 +20,6 @@ import java.util.Date;
 public class ProjectRequestDto {
     @NotBlank(message = "Project name is mandatory")
     private String name;
-
     @NotBlank(message = "Project description is mandatory")
     @Size(max = 255, message = "Description cannot exceed 255 characters")
     private String description;
